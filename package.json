@@ -1,0 +1,31 @@
+{
+  "name": "polyclinic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "pnpm run --filter ./apps/* format",
+    "lint": "pnpm run --filter ./apps/* lint",
+    "check": "pnpm run --filter ./apps/* check",
+    "check:check": "pnpm run --filter ./apps/* check:check",
+    "prepare": "husky"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.23.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.23.0",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.2",
+    "typescript": "^6.0.3"
+  }
+}

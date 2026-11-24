@@ -1,0 +1,8 @@
+{
+  "apps/server/**/*.{js,ts,jsx,tsx,json}": [
+    "pnpm --filter server exec biome check --write --staged --no-errors-on-unmatched"
+  ],
+  "apps/client/**/*.{js,ts,jsx,tsx,json}": [
+    "pnpm --filter client exec biome check --write --staged --no-errors-on-unmatched"
+  ]
+}
