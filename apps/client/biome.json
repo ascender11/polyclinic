@@ -1,13 +1,42 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
-  "extends": "//",
+  "root": true,
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "root": "../.."
+  },
+  "files": { "ignoreUnknown": false },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "lineEnding": "crlf",
+    "formatWithErrors": false
+  },
   "html": { "formatter": { "enabled": true } },
   "css": { "parser": { "tailwindDirectives": true } },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "es5",
+      "bracketSameLine": false
+    }
+  },
   "linter": {
+    "enabled": true,
     "rules": {
-      "a11y": {
-        "noSvgWithoutTitle": "off"
-      }
+      "a11y": { "noSvgWithoutTitle": "off" },
+      "correctness": { "noUnusedImports": "warn", "noUnusedVariables": "warn" },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useTemplate": "warn",
+        "useConst": "warn"
+      },
+      "nursery": { "useTailwindSortedClasses": "warn" }
     }
   },
   "assist": {

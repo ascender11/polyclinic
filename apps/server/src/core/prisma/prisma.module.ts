@@ -7,14 +7,8 @@ import { PrismaService } from './prisma.service.js';
 
 @Global()
 @Module({
-  imports: [
-    ConfigModule.forFeature(databaseConfig),
-  ],
-  providers: [
-    PrismaService,
-  ],
-  exports: [
-    PrismaService,
-  ],
+  imports: [ConfigModule.forFeature(databaseConfig)],
+  providers: [PrismaService],
+  exports: [PrismaService],
 })
 export class PrismaModule {}
