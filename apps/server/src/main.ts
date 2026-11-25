@@ -4,7 +4,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 
 import { appConfigSchema } from '@/shared/config/application/app.config.schema';
 
-import { AppModule } from './app.module.js';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
