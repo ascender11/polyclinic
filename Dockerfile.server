@@ -1,0 +1,34 @@
+
+FROM node:22-slim AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME/bin:$PATH"
+
+RUN corepack enable \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        openssl=3.0.22-1~deb12u2 \
+        ca-certificates=20250419~deb12u2 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src/app
+
+FROM base AS build
+
+COPY . .
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+
+RUN pnpm --filter server exec prisma generate \
+    && pnpm --filter server build
+
+FROM base AS server
+
+ENV NODE_ENV=production
+
+COPY --from=build /usr/src/app /usr/src/app
+
+EXPOSE 3001
+
+CMD ["node", "apps/server/dist/main.js"]

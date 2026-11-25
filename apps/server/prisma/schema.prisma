@@ -11,3 +11,57 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum DoctorCategory {
+  FIRST
+  SECOND
+  THIRD
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Doctor {
+  id           Int              @id @default(autoincrement())
+  fullName     String
+  specialty    String
+  category     DoctorCategory
+  appointments Appointment[]
+}
+
+model Patient {
+  id                Int           @id @default(autoincrement())
+  medicalCardNumber String        @unique
+  fullName          String
+  birthDate         DateTime
+  address           String
+  gender            Gender
+  discount          Decimal       @default(0)
+  appointments      Appointment[]
+}
+
+model Diagnosis {
+  id           Int           @id @default(autoincrement())
+  code         String        @unique
+  name         String
+  appointments Appointment[]
+}
+
+model Appointment {
+  id           Int      @id @default(autoincrement())
+  ticketNumber Int      @unique
+  visitDate    DateTime
+  purpose      String
+  cost         Decimal
+
+  doctorId     Int
+  doctor       Doctor   @relation(fields: [doctorId], references: [id], onDelete: Restrict)
+
+  patientId    Int
+  patient      Patient  @relation(fields: [patientId], references: [id], onDelete: Restrict)
+
+  diagnosisId  Int
+  diagnosis    Diagnosis @relation(fields: [diagnosisId], references: [id], onDelete: Restrict)
+}
