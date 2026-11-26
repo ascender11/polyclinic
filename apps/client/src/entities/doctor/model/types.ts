@@ -15,11 +15,11 @@ export type DoctorCategory = z.infer<typeof DoctorCategorySchema>;
 
 export type Doctor = z.infer<typeof DoctorSchema>;
 
-export type CreateDoctorInput = z.infer<typeof CreateDoctorSchema>;
+export type CreateDoctorInput = z.input<typeof CreateDoctorSchema>;
 
-export type UpdateDoctorInput = z.infer<typeof UpdateDoctorSchema>;
+export type UpdateDoctorInput = z.input<typeof UpdateDoctorSchema>;
 
-export type FindDoctorsQuery = z.infer<typeof FindDoctorsQuerySchema>;
+export type FindDoctorsQuery = z.input<typeof FindDoctorsQuerySchema>;
 
 export type PaginationMeta = z.infer<typeof PaginationMetaSchema>;
 

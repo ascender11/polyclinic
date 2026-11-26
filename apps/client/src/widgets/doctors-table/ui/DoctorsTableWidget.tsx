@@ -1,6 +1,8 @@
 import { FilterDoctors } from '@/features/filter-doctors';
 import { SearchDoctors } from '@/features/search-doctors';
 
+import { PageSizeSelect, Pagination } from '@/shared/ui/pagination';
+
 import { useDoctorsList } from '../model/use-doctors-list';
 import { useDoctorsParams } from '../model/use-doctors-params';
 import { DoctorsTable } from './DoctorsTable';
@@ -28,15 +30,7 @@ export const DoctorsTableWidget = () => {
 
           <FilterDoctors value={category} onChange={updateCategory} />
 
-          <select
-            value={limit}
-            onChange={(event) => updateLimit(Number(event.target.value))}
-            className="cursor-pointer rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm transition outline-none hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
-          >
-            <option value={10}>10 записей</option>
-            <option value={20}>20 записей</option>
-            <option value={50}>50 записей</option>
-          </select>
+          <PageSizeSelect value={limit} onChange={updateLimit} />
         </div>
       </div>
 
@@ -47,29 +41,7 @@ export const DoctorsTableWidget = () => {
           Всего записей: <span className="font-semibold text-slate-900">{total}</span>
         </p>
 
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            disabled={isLoading || page <= 1}
-            onClick={() => setPage((value) => value - 1)}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Назад
-          </button>
-
-          <span className="min-w-28 text-center text-sm text-slate-500">
-            {totalPages === 0 ? 0 : page} из {totalPages}
-          </span>
-
-          <button
-            type="button"
-            disabled={isLoading || page >= totalPages}
-            onClick={() => setPage((value) => value + 1)}
-            className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Далее
-          </button>
-        </div>
+        <Pagination page={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
       </footer>
     </section>
   );

@@ -15,24 +15,28 @@ export const PatientSchema = z.object({
 export const CreatePatientSchema = z.object({
   medicalCardNumber: z.string().trim().min(1).max(30),
   fullName: z.string().trim().min(2).max(120),
-  birthDate: z.coerce.date(),
+  birthDate: z.coerce.date().refine((date) => date <= new Date(), {
+    message: 'Birth date cannot be in the future',
+  }),
   address: z.string().trim().min(2).max(255),
   gender: GenderSchema,
-  discount: z.number().min(0).max(100),
+  discount: z.number().min(0).max(100).default(0),
 });
 
-export const UpdatePatientSchema = CreatePatientSchema.partial();
+export const UpdatePatientSchema = CreatePatientSchema.partial().refine((data) => Object.keys(data).length > 0, {
+  message: 'At least one field must be provided',
+});
 
 export const FindPatientsQuerySchema = z.object({
-  page: z.coerce.number().int().positive().optional(),
-  limit: z.coerce.number().int().positive().optional(),
-  sortBy: z.enum(['id', 'medicalCardNumber', 'fullName', 'birthDate', 'address', 'gender', 'discount']).optional(),
-  sortOrder: z.enum(['asc', 'desc']).optional(),
-  medicalCardNumber: z.string().optional(),
-  fullName: z.string().optional(),
-  address: z.string().optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(10),
+  sortBy: z.enum(['id', 'medicalCardNumber', 'fullName', 'birthDate', 'address', 'gender', 'discount']).default('id'),
+  sortOrder: z.enum(['asc', 'desc']).default('asc'),
+  medicalCardNumber: z.string().trim().optional(),
+  fullName: z.string().trim().optional(),
+  address: z.string().trim().optional(),
   gender: GenderSchema.optional(),
-  search: z.string().optional(),
+  search: z.string().trim().optional(),
 });
 
 export const PaginationMetaSchema = z.object({

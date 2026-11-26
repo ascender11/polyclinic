@@ -2,11 +2,13 @@ import { useState } from 'react';
 
 import type { Gender } from '@/entities/patient';
 
+import { usePagination } from '@/shared/lib/hooks';
+
 export const usePatientsParams = () => {
   const [search, setSearch] = useState('');
   const [gender, setGender] = useState<Gender | ''>('');
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+
+  const { page, limit, setPage, updateLimit } = usePagination();
 
   const updateSearch = (value: string) => {
     setSearch(value);
@@ -15,11 +17,6 @@ export const usePatientsParams = () => {
 
   const updateGender = (value: Gender | '') => {
     setGender(value);
-    setPage(1);
-  };
-
-  const updateLimit = (value: number) => {
-    setLimit(value);
     setPage(1);
   };
 

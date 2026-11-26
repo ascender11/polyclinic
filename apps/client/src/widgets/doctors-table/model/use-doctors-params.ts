@@ -2,11 +2,13 @@ import { useState } from 'react';
 
 import type { DoctorCategory } from '@/entities/doctor';
 
+import { usePagination } from '@/shared/lib/hooks';
+
 export const useDoctorsParams = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<DoctorCategory | ''>('');
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+
+  const { page, limit, setPage, updateLimit } = usePagination();
 
   const updateSearch = (value: string) => {
     setSearch(value);
@@ -15,11 +17,6 @@ export const useDoctorsParams = () => {
 
   const updateCategory = (value: DoctorCategory | '') => {
     setCategory(value);
-    setPage(1);
-  };
-
-  const updateLimit = (value: number) => {
-    setLimit(value);
     setPage(1);
   };
 

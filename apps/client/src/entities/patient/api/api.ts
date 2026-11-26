@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/api/axios-instance';
+import { axiosInstance } from '@/shared/api';
 
 import {
   CreatePatientSchema,

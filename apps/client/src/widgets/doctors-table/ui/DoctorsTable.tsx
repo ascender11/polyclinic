@@ -1,17 +1,13 @@
 import type { Doctor } from '@/entities/doctor';
 
+import { TableState } from '@/shared/ui/table-state';
+
 interface DoctorsTableProps {
   doctors: Doctor[];
   isLoading: boolean;
   error: string | null;
   onRetry: () => void;
 }
-
-const categoryStyles = {
-  FIRST: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
-  SECOND: 'bg-blue-50 text-blue-700 ring-blue-600/20',
-  THIRD: 'bg-amber-50 text-amber-700 ring-amber-600/20',
-};
 
 const categoryLabels = {
   FIRST: 'Первая',
@@ -33,34 +29,15 @@ export const DoctorsTable = ({ doctors, isLoading, error, onRetry }: DoctorsTabl
           </thead>
 
           <tbody className="divide-y divide-slate-100">
-            {isLoading ? (
-              <tr>
-                <td colSpan={3} className="px-6 py-16 text-center">
-                  <div className="flex items-center justify-center gap-3 text-slate-500">
-                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-blue-600" />
-                    Загрузка врачей...
-                  </div>
-                </td>
-              </tr>
-            ) : error ? (
-              <tr>
-                <td colSpan={3} className="px-6 py-16 text-center">
-                  <p className="font-medium text-red-600">{error}</p>
-                  <button
-                    type="button"
-                    onClick={onRetry}
-                    className="mt-3 text-sm font-medium text-blue-600 hover:text-blue-700"
-                  >
-                    Попробовать снова
-                  </button>
-                </td>
-              </tr>
-            ) : doctors.length === 0 ? (
-              <tr>
-                <td colSpan={3} className="px-6 py-16 text-center text-slate-500">
-                  Врачи не найдены
-                </td>
-              </tr>
+            {isLoading || error || doctors.length === 0 ? (
+              <TableState
+                colSpan={3}
+                isLoading={isLoading}
+                error={error}
+                loadingMessage="Загрузка врачей..."
+                emptyMessage="Врачи не найдены"
+                onRetry={onRetry}
+              />
             ) : (
               doctors.map((doctor) => (
                 <tr key={doctor.id} className="transition-colors hover:bg-slate-50/80">
@@ -68,13 +45,7 @@ export const DoctorsTable = ({ doctors, isLoading, error, onRetry }: DoctorsTabl
 
                   <td className="px-6 py-4 whitespace-nowrap text-slate-600">{doctor.specialty}</td>
 
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${categoryStyles[doctor.category]}`}
-                    >
-                      {categoryLabels[doctor.category]}
-                    </span>
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-slate-600">{categoryLabels[doctor.category]}</td>
                 </tr>
               ))
             )}

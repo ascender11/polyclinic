@@ -15,11 +15,11 @@ export type Gender = z.infer<typeof GenderSchema>;
 
 export type Patient = z.infer<typeof PatientSchema>;
 
-export type CreatePatientInput = z.infer<typeof CreatePatientSchema>;
+export type CreatePatientInput = z.input<typeof CreatePatientSchema>;
 
-export type UpdatePatientInput = z.infer<typeof UpdatePatientSchema>;
+export type UpdatePatientInput = z.input<typeof UpdatePatientSchema>;
 
-export type FindPatientsQuery = z.infer<typeof FindPatientsQuerySchema>;
+export type FindPatientsQuery = z.input<typeof FindPatientsQuerySchema>;
 
 export type PaginationMeta = z.infer<typeof PaginationMetaSchema>;
 

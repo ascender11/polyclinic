@@ -9,12 +9,22 @@ export const SearchPatients = ({ value, onChange }: SearchPatientsProps) => {
   const [search, setSearch] = useState(value);
 
   useEffect(() => {
+    setSearch(value);
+  }, [value]);
+
+  useEffect(() => {
+    const normalizedSearch = search.trim();
+
+    if (normalizedSearch === value) {
+      return;
+    }
+
     const timeout = setTimeout(() => {
-      onChange(search.trim());
+      onChange(normalizedSearch);
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [search, onChange]);
+  }, [search, value, onChange]);
 
   return (
     <div className="relative min-w-0 flex-1">

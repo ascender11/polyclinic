@@ -1,5 +1,7 @@
 import type { Patient } from '@/entities/patient';
 
+import { TableState } from '@/shared/ui/table-state';
+
 interface PatientsTableProps {
   patients: Patient[];
   isLoading: boolean;
@@ -31,34 +33,15 @@ export const PatientsTable = ({ patients, isLoading, error, onRetry }: PatientsT
           </thead>
 
           <tbody className="divide-y divide-slate-100">
-            {isLoading ? (
-              <tr>
-                <td colSpan={6} className="px-6 py-16 text-center">
-                  <div className="flex items-center justify-center gap-3 text-slate-500">
-                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-slate-200 border-t-blue-600" />
-                    Загрузка пациентов...
-                  </div>
-                </td>
-              </tr>
-            ) : error ? (
-              <tr>
-                <td colSpan={6} className="px-6 py-16 text-center">
-                  <p className="font-medium text-red-600">{error}</p>
-                  <button
-                    type="button"
-                    onClick={onRetry}
-                    className="mt-3 text-sm font-medium text-blue-600 hover:text-blue-700"
-                  >
-                    Попробовать снова
-                  </button>
-                </td>
-              </tr>
-            ) : patients.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="px-6 py-16 text-center text-slate-500">
-                  Пациенты не найдены
-                </td>
-              </tr>
+            {isLoading || error || patients.length === 0 ? (
+              <TableState
+                colSpan={6}
+                isLoading={isLoading}
+                error={error}
+                loadingMessage="Загрузка пациентов..."
+                emptyMessage="Пациенты не найдены"
+                onRetry={onRetry}
+              />
             ) : (
               patients.map((patient) => (
                 <tr key={patient.id} className="transition-colors hover:bg-slate-50/80">
