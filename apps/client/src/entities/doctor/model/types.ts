@@ -7,7 +7,6 @@ import type {
   DoctorExistsSchema,
   DoctorSchema,
   FindDoctorsQuerySchema,
-  PaginatedResponseSchema,
   PaginationMetaSchema,
   UpdateDoctorSchema,
 } from './contracts';

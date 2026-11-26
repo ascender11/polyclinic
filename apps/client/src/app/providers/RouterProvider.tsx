@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider as ReactRouterProvider } from 'reac
 
 import { DoctorsPage } from '@/pages/doctors';
 import { Home } from '@/pages/home';
+import { PatientsPage } from '@/pages/patients';
 
 import { routes } from '@/shared/config';
 
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
   {
     path: routes.doctors,
     element: <DoctorsPage />,
+  },
+  {
+    path: routes.patients,
+    element: <PatientsPage />,
   },
 ]);
 
