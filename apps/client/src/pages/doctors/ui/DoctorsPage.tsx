@@ -1,19 +1,13 @@
 import { DoctorsTableWidget } from '@/widgets/doctors-table';
 
-export const DoctorsPage = () => {
-  return (
-    <main className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-8">
-        <header className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-blue-600">ПОЛИКЛИНИКА</span>
+export const DoctorsPage = () => (
+  <div className="space-y-6">
+    <div>
+      <h2 className="text-2xl font-bold tracking-tight text-slate-900">Врачи</h2>
 
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Врачи</h1>
+      <p className="mt-1 text-sm text-slate-500">Управление врачами поликлиники</p>
+    </div>
 
-          <p className="text-sm text-slate-500">Управление списком врачей поликлиники</p>
-        </header>
-
-        <DoctorsTableWidget />
-      </div>
-    </main>
-  );
-};
+    <DoctorsTableWidget />
+  </div>
+);
