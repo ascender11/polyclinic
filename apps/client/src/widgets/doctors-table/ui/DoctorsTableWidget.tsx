@@ -1,7 +1,8 @@
-import { FilterDoctors } from '@/features/filter-doctors';
-import { SearchDoctors } from '@/features/search-doctors';
+import { DoctorCategorySelect } from '@/entities/doctor';
 
+import { PAGE_SIZES } from '@/shared/lib/hooks';
 import { PageSizeSelect, Pagination } from '@/shared/ui/pagination';
+import { SearchInput } from '@/shared/ui/search-input';
 
 import { useDoctorsList } from '../model/use-doctors-list';
 import { useDoctorsParams } from '../model/use-doctors-params';
@@ -26,23 +27,17 @@ export const DoctorsTableWidget = () => {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
-          <SearchDoctors value={search} onChange={updateSearch} />
+          <SearchInput value={search} onChange={updateSearch} placeholder="Поиск по ФИО или специальности..." />
 
-          <FilterDoctors value={category} onChange={updateCategory} />
+          <DoctorCategorySelect value={category} onChange={updateCategory} />
 
-          <PageSizeSelect value={limit} onChange={updateLimit} />
+          <PageSizeSelect value={limit} options={PAGE_SIZES} onChange={updateLimit} />
         </div>
       </div>
 
       <DoctorsTable doctors={doctors} isLoading={isLoading} error={error} onRetry={retry} />
 
-      <footer className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <p className="text-sm text-slate-500">
-          Всего записей: <span className="font-semibold text-slate-900">{total}</span>
-        </p>
-
-        <Pagination page={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
-      </footer>
+      <Pagination page={page} totalPages={totalPages} total={total} isLoading={isLoading} onPageChange={setPage} />
     </section>
   );
 };

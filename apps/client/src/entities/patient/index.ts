@@ -1,23 +1,4 @@
 export { patientService } from './api/api';
-export {
-  CreatePatientSchema,
-  DeletePatientResponseSchema,
-  FindPatientsQuerySchema,
-  GenderSchema,
-  PaginatedResponseSchema,
-  PaginationMetaSchema,
-  PatientExistsSchema,
-  PatientSchema,
-  UpdatePatientSchema,
-} from './model/contracts';
-export type {
-  CreatePatientInput,
-  DeletePatientResponse,
-  FindPatientsQuery,
-  Gender,
-  PaginatedResponse,
-  PaginationMeta,
-  Patient,
-  PatientExists,
-  UpdatePatientInput,
-} from './model/types';
+export { genderLabels, genders, isGender } from './model/gender';
+export type { FindPatientsQuery, Gender, Patient } from './model/types';
+export { GenderSelect } from './ui/GenderSelect';

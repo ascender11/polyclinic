@@ -28,19 +28,6 @@ export const FindDoctorsQuerySchema = z.object({
   search: z.string().trim().optional(),
 });
 
-export const PaginationMetaSchema = z.object({
-  page: z.number().int().positive(),
-  limit: z.number().int().positive(),
-  total: z.number().int().nonnegative(),
-  totalPages: z.number().int().nonnegative(),
-});
-
-export const PaginatedResponseSchema = <T extends z.ZodType>(itemSchema: T) =>
-  z.object({
-    data: z.array(itemSchema),
-    meta: PaginationMetaSchema,
-  });
-
 export const DoctorExistsSchema = z.object({
   exists: z.boolean(),
 });

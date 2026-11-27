@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react';
 
-interface SearchPatientsProps {
+import { useDebouncedValue } from '@/shared/lib/hooks';
+
+interface SearchInputProps {
   value: string;
   onChange: (value: string) => void;
+  placeholder?: string;
+  delay?: number;
 }
 
-export const SearchPatients = ({ value, onChange }: SearchPatientsProps) => {
+export const SearchInput = ({ value, onChange, placeholder = 'Поиск...', delay = 300 }: SearchInputProps) => {
   const [search, setSearch] = useState(value);
+  const [prevValue, setPrevValue] = useState(value);
+  const debounced = useDebouncedValue(search.trim(), delay);
 
-  useEffect(() => {
+  if (value !== prevValue) {
+    setPrevValue(value);
     setSearch(value);
-  }, [value]);
+  }
 
   useEffect(() => {
-    const normalizedSearch = search.trim();
-
-    if (normalizedSearch === value) {
-      return;
+    if (debounced !== value) {
+      onChange(debounced);
     }
-
-    const timeout = setTimeout(() => {
-      onChange(normalizedSearch);
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [search, value, onChange]);
+  }, [debounced]);
 
   return (
     <div className="relative min-w-0 flex-1">
@@ -43,7 +42,7 @@ export const SearchPatients = ({ value, onChange }: SearchPatientsProps) => {
         type="search"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
-        placeholder="Поиск по ФИО, номеру карты или адресу..."
+        placeholder={placeholder}
         className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pr-4 pl-11 text-sm text-slate-900 shadow-sm transition outline-none placeholder:text-slate-400 hover:border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
       />
     </div>

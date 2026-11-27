@@ -1,7 +1,8 @@
-import { FilterPatients } from '@/features/filter-patients';
-import { SearchPatients } from '@/features/search-patients';
+import { GenderSelect } from '@/entities/patient';
 
+import { PAGE_SIZES } from '@/shared/lib/hooks';
 import { PageSizeSelect, Pagination } from '@/shared/ui/pagination';
+import { SearchInput } from '@/shared/ui/search-input';
 
 import { usePatientsList } from '../model/use-patients-list';
 import { usePatientsParams } from '../model/use-patients-params';
@@ -26,23 +27,17 @@ export const PatientsTableWidget = () => {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row">
-          <SearchPatients value={search} onChange={updateSearch} />
+          <SearchInput value={search} onChange={updateSearch} placeholder="Поиск по ФИО, номеру карты или адресу..." />
 
-          <FilterPatients value={gender} onChange={updateGender} />
+          <GenderSelect value={gender} onChange={updateGender} />
 
-          <PageSizeSelect value={limit} onChange={updateLimit} />
+          <PageSizeSelect value={limit} options={PAGE_SIZES} onChange={updateLimit} />
         </div>
       </div>
 
       <PatientsTable patients={patients} isLoading={isLoading} error={error} onRetry={retry} />
 
-      <footer className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <p className="text-sm text-slate-500">
-          Всего записей: <span className="font-semibold text-slate-900">{total}</span>
-        </p>
-
-        <Pagination page={page} totalPages={totalPages} isLoading={isLoading} onPageChange={setPage} />
-      </footer>
+      <Pagination page={page} totalPages={totalPages} total={total} isLoading={isLoading} onPageChange={setPage} />
     </section>
   );
 };

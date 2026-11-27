@@ -5,7 +5,6 @@ import type {
   DeletePatientResponseSchema,
   FindPatientsQuerySchema,
   GenderSchema,
-  PaginationMetaSchema,
   PatientExistsSchema,
   PatientSchema,
   UpdatePatientSchema,
@@ -20,13 +19,6 @@ export type CreatePatientInput = z.input<typeof CreatePatientSchema>;
 export type UpdatePatientInput = z.input<typeof UpdatePatientSchema>;
 
 export type FindPatientsQuery = z.input<typeof FindPatientsQuerySchema>;
-
-export type PaginationMeta = z.infer<typeof PaginationMetaSchema>;
-
-export type PaginatedResponse<T> = {
-  data: T[];
-  meta: PaginationMeta;
-};
 
 export type PatientExists = z.infer<typeof PatientExistsSchema>;
 

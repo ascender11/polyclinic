@@ -1,33 +1,17 @@
-import { useState } from 'react';
-
 import type { DoctorCategory } from '@/entities/doctor';
+import { isDoctorCategory } from '@/entities/doctor';
 
-import { usePagination } from '@/shared/lib/hooks';
+import { useListParams } from '@/shared/lib/hooks';
 
 export const useDoctorsParams = () => {
-  const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<DoctorCategory | ''>('');
+  const { searchParams, update, ...listParams } = useListParams();
 
-  const { page, limit, setPage, updateLimit } = usePagination();
-
-  const updateSearch = (value: string) => {
-    setSearch(value);
-    setPage(1);
-  };
-
-  const updateCategory = (value: DoctorCategory | '') => {
-    setCategory(value);
-    setPage(1);
-  };
+  const categoryParam = searchParams.get('category');
+  const category: DoctorCategory | '' = isDoctorCategory(categoryParam) ? categoryParam : '';
 
   return {
-    search,
+    ...listParams,
     category,
-    page,
-    limit,
-    updateSearch,
-    updateCategory,
-    updateLimit,
-    setPage,
+    updateCategory: (value: DoctorCategory | '') => update({ category: value }, { resetPage: true }),
   };
 };

@@ -1,10 +1,9 @@
-import { axiosInstance } from '@/shared/api';
+import { axiosInstance, PaginatedResponseSchema } from '@/shared/api';
 
 import {
   CreatePatientSchema,
   DeletePatientResponseSchema,
   FindPatientsQuerySchema,
-  PaginatedResponseSchema,
   PatientExistsSchema,
   PatientSchema,
   UpdatePatientSchema,

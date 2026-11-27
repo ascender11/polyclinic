@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/api';
+import { axiosInstance, PaginatedResponseSchema } from '@/shared/api';
 
 import {
   CreateDoctorSchema,
@@ -6,7 +6,6 @@ import {
   DoctorExistsSchema,
   DoctorSchema,
   FindDoctorsQuerySchema,
-  PaginatedResponseSchema,
   UpdateDoctorSchema,
 } from '../model/contracts';
 import type { CreateDoctorInput, FindDoctorsQuery, UpdateDoctorInput } from '../model/types';
