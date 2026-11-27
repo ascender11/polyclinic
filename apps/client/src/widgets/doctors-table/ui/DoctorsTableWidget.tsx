@@ -1,3 +1,4 @@
+import type { Doctor } from '@/entities/doctor';
 import { DoctorCategorySelect } from '@/entities/doctor';
 
 import { PAGE_SIZES } from '@/shared/lib/hooks';
@@ -8,7 +9,13 @@ import { useDoctorsList } from '../model/use-doctors-list';
 import { useDoctorsParams } from '../model/use-doctors-params';
 import { DoctorsTable } from './DoctorsTable';
 
-export const DoctorsTableWidget = () => {
+interface DoctorsTableWidgetProps {
+  deletingId: number | null;
+  onEditDoctor: (doctor: Doctor) => void;
+  onDeleteDoctor: (doctor: Doctor) => Promise<boolean>;
+}
+
+export const DoctorsTableWidget = ({ deletingId, onEditDoctor, onDeleteDoctor }: DoctorsTableWidgetProps) => {
   const { search, category, page, limit, updateSearch, updateCategory, updateLimit, setPage } = useDoctorsParams();
 
   const { doctors, total, totalPages, isLoading, error, retry } = useDoctorsList({
@@ -17,6 +24,14 @@ export const DoctorsTableWidget = () => {
     search: search || undefined,
     category: category || undefined,
   });
+
+  const handleDelete = async (doctor: Doctor) => {
+    const deleted = await onDeleteDoctor(doctor);
+
+    if (deleted) {
+      retry();
+    }
+  };
 
   return (
     <section className="space-y-5">
@@ -35,7 +50,15 @@ export const DoctorsTableWidget = () => {
         </div>
       </div>
 
-      <DoctorsTable doctors={doctors} isLoading={isLoading} error={error} onRetry={retry} />
+      <DoctorsTable
+        doctors={doctors}
+        isLoading={isLoading}
+        error={error}
+        deletingId={deletingId}
+        onRetry={retry}
+        onEdit={onEditDoctor}
+        onDelete={handleDelete}
+      />
 
       <Pagination page={page} totalPages={totalPages} total={total} isLoading={isLoading} onPageChange={setPage} />
     </section>
